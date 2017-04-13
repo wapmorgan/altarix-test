@@ -1,0 +1,23 @@
+<table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp" style="width: 100%">
+    <thead>
+        <tr>
+            <td class="mdl-data-table__cell--non-numeric">Date</td>
+            <td>Ping</td>
+            <td class="mdl-data-table__cell--non-numeric">Status</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let result of results" (click)="selectResult(result)">
+            <td class="mdl-data-table__cell--non-numeric">{{result.date_request * 1000 | date:'medium'}}</td>
+            <td>{{result.delay_time}} sec</td>
+            <td class="mdl-data-table__cell--non-numeric"><img *ngIf="result.status == 'ok'" src="img/ok.png"/><img *ngIf="result.status != 'ok'" src="img/error.png"/></td>
+        </tr>
+        <tr *ngIf="results.length == 0">
+            <td rowspan="3" style="text-align: center">
+                <!-- MDL Progress Bar with Indeterminate Progress -->
+                <div id="p1" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+                Loading ...
+            </td>
+        </tr>
+    </tbody>
+</table>
