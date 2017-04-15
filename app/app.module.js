@@ -10,7 +10,6 @@ var core_1 = require("@angular/core");
 var platform_browser_1 = require("@angular/platform-browser");
 var http_1 = require("@angular/http");
 var app_component_1 = require("./app.component");
-var dateSelector_component_1 = require("./dateSelector.component");
 var resultList_component_1 = require("./resultList.component");
 var backend_service_1 = require("./backend.service");
 var AppModule = (function () {
@@ -26,7 +25,6 @@ AppModule = __decorate([
         ],
         declarations: [
             app_component_1.AppComponent,
-            dateSelector_component_1.DateSelector,
             resultList_component_1.ResultList
         ],
         bootstrap: [app_component_1.AppComponent],

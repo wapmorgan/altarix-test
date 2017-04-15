@@ -5,12 +5,8 @@
             Last check: <span style="color: green" *ngIf="lastResult.status == 'ok'">Ok</span> <span style="color: red" *ngIf="lastResult.status != 'ok'">Error</span>
             <div class="mdl-tooltip" for="last_result_status">{{lastResult.date_request | date:'medium'}}</div>
         </div>
-        <datepicker>
-          <input ng-model="date" type="text" name="start_date"/>
-        </datepicker>
-        <datepicker>
-          <input ng-model="date" type="text" name="end_date"/>
-        </datepicker>
+        <input type="date" [value]="startDate"/>
+        <input type="date" [value]="endDate"/>
         <resultList (onSelected)="onSelected($event)"></resultList>
     </div>
     <div class="mdl-cell mdl-cell--4-col">
@@ -33,7 +29,7 @@
                         </tr>
                         <tr>
                             <td class="mdl-data-table__cell--non-numeric">Результат проверки:</td>
-                            <td>{{selectedResult.status}}</td>
+                            <td>{{selectedResult.status | uppercase}}</td>
                         </tr>
                         <tr *ngIf="selectedResult.response_raw">
                             <td class="mdl-data-table__cell--non-numeric">Ответ сервера:</td>

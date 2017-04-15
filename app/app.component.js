@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
+var moment = require("moment");
 var backend_service_1 = require("./backend.service");
 var AppComponent = (function () {
     function AppComponent(backend) {
@@ -17,6 +18,9 @@ var AppComponent = (function () {
     }
     AppComponent.prototype.ngOnInit = function () {
         this.getLastResult();
+        this.startDate = moment().format('DDD.MM.YYYY');
+        this.endDate = this.startDate;
+        console.log(this.startDate);
     };
     AppComponent.prototype.getLastResult = function () {
         var _this = this;
@@ -26,6 +30,9 @@ var AppComponent = (function () {
         var _this = this;
         this.backend.getResult(id).then(function (selectedResult) { return _this.selectedResult = selectedResult; });
         console.log(id);
+        this.startDate = moment().format('DDD.MM.YYYY');
+        this.endDate = this.startDate;
+        console.log(this.startDate);
     };
     return AppComponent;
 }());
