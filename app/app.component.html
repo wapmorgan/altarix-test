@@ -5,14 +5,46 @@
             Last check: <span style="color: green" *ngIf="lastResult.status == 'ok'">Ok</span> <span style="color: red" *ngIf="lastResult.status != 'ok'">Error</span>
             <div class="mdl-tooltip" for="last_result_status">{{lastResult.date_request | date:'medium'}}</div>
         </div>
-        <dateSelector></dateSelector>
+        <datepicker>
+          <input ng-model="date" type="text" name="start_date"/>
+        </datepicker>
+        <datepicker>
+          <input ng-model="date" type="text" name="end_date"/>
+        </datepicker>
         <resultList (onSelected)="onSelected($event)"></resultList>
     </div>
     <div class="mdl-cell mdl-cell--4-col">
-        <div *ngIf="selectedResult" style="mdl-shadow--2dp">
+        <div *ngIf="selectedResult" class="mdl-shadow--2dp">
             <fieldset>
-                <legend>Check details</legend>
-
+                <legend>{{selectedResult.date_request * 1000 | date:'medium'}} check details</legend>
+                <table class="mdl-data-table mdl-js-data-table" style="width: 100%">
+                    <tbody>
+                        <tr>
+                            <td class="mdl-data-table__cell--non-numeric">Дата запроса:</td>
+                            <td>{{selectedResult.date_request * 1000 | date:'medium'}}</td>
+                        </tr>
+                        <tr>
+                            <td class="mdl-data-table__cell--non-numeric">Дата ответа:</td>
+                            <td>{{selectedResult.date_response * 1000 | date:'medium'}}</td>
+                        </tr>
+                        <tr>
+                            <td class="mdl-data-table__cell--non-numeric">Время ожидания:</td>
+                            <td>{{selectedResult.delay_time | number:'1.0-1'}}с ({{selectedResult.delay_time * 1000 | number:'3.0-0'}}мс)</td>
+                        </tr>
+                        <tr>
+                            <td class="mdl-data-table__cell--non-numeric">Результат проверки:</td>
+                            <td>{{selectedResult.status}}</td>
+                        </tr>
+                        <tr *ngIf="selectedResult.response_raw">
+                            <td class="mdl-data-table__cell--non-numeric">Ответ сервера:</td>
+                            <td>{{selectedResult.response_raw}}</td>
+                        </tr>
+                        <tr *ngIf="selectedResult.headers_raw">
+                            <td class="mdl-data-table__cell--non-numeric">Заголовки ответа:</td>
+                            <td>{{selectedResult.headers_raw}}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </fieldset>
         </div>
     </div>
