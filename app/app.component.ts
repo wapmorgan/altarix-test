@@ -1,6 +1,5 @@
 import { OnInit } from '@angular/core'
 import { Component } from '@angular/core'
-import moment from 'moment'
 import { BackendService } from './backend.service'
 import { Result } from './result'
 

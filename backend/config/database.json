@@ -2,7 +2,7 @@
     "driver": "pgsql",
     "hostname": "127.0.0.1",
     "port": 5432,
-    "database": "altarix-test",
+    "database": "postgres",
     "username": "postgres",
     "password": 12345
 }

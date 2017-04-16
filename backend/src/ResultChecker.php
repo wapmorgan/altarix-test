@@ -51,7 +51,7 @@ class ResultChecker {
                 if (!isset($xml[$element]))
                     throw new Exception('XML does not have inner element "'.$element.'"');
                 if ((string)$xml[$element] != $content)
-                    throw new Exception('XML element "'.$element."' value ('.(string)$xml[$element].') mismatch with ethalon ('.$content.')');
+                    throw new Exception('XML element "'.$element.'" value '.(string)$xml[$element].') mismatch with ethalon ('.$content.')');
             }
         }
     }

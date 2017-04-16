@@ -4,6 +4,9 @@
         <div class="mdl-grid">
             <div class="mdl-cell mdl-cell--4-col" style="text-align: left">
                 <input type="date" [ngModel]="startDate" [attr.value]="startDate" (ngModelChange)="startDateChange($event)" [attr.max]="currentDate"/>
+                <!-- <my-date-picker
+                    (dateChanged)="onStartDateChanged($event)"
+                    [selDate]="startDate"></my-date-picker> -->
             </div>
             <div class="mdl-cell mdl-cell--4-col" style="text-align: center">
                 <div *ngIf="lastResult" id="last_result_status">
@@ -13,6 +16,9 @@
             </div>
             <div class="mdl-cell mdl-cell--4-col" style="text-align: right">
                 <input type="date" [ngModel]="endDate" [attr.value]="endDate" (ngModelChange)="endDateChange($event)" [attr.min]="currentDate"/>
+                <!-- <my-date-picker
+                    (dateChanged)="onEndDateChanged($event)"
+                    [selDate]="endDate"></my-date-picker> -->
             </div>
         </div>
 
