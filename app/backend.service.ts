@@ -12,8 +12,8 @@ export class BackendService {
 
     constructor(private http: Http) { }
 
-    getResults(): Promise<Result[]> {
-        return this.http.get(this.resultsUrl)
+    getResults(startDate: string, endDate: string): Promise<Result[]> {
+        return this.http.get(this.resultsUrl + '#start=' + startDate + ';end=' + endDate)
            .toPromise()
            .then(response => response.json() as Result[])
            .catch(this.handleError);

@@ -1,6 +1,6 @@
 import { OnInit } from '@angular/core'
 import { Component } from '@angular/core'
-import * as moment from 'moment'
+import moment from 'moment'
 import { BackendService } from './backend.service'
 import { Result } from './result'
 
@@ -13,12 +13,15 @@ export class AppComponent {
     selectedResult: Result;
     startDate: string;
     endDate: string;
+    currentDate: string;
 
     constructor (private backend: BackendService) {}
 
     ngOnInit(): void {
         this.getLastResult();
-        this.startDate = moment().format('DDD.MM.YYYY');
+        var date: Date = new Date();
+        this.currentDate = date.getFullYear() + '-' + (date.getMonth() < 9 ? '0' + (date.getMonth()+1) : date.getMonth()+1) + '-' + (date.getDate() < 10 ? '0' + date.getDate() : date.getDate());
+        this.startDate = this.currentDate;
         this.endDate = this.startDate;
         console.log(this.startDate);
     }
@@ -30,8 +33,14 @@ export class AppComponent {
     onSelected(id: number): void {
         this.backend.getResult(id).then(selectedResult => this.selectedResult = selectedResult);
         console.log(id);
-        this.startDate = moment().format('DDD.MM.YYYY');
-        this.endDate = this.startDate;
-        console.log(this.startDate);
+    }
+
+
+    startDateChange(date: string): void {
+        this.startDate = date;
+    }
+
+    endDateChange(date: string): void {
+        this.endDate = date;
     }
 }

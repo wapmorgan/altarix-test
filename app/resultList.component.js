@@ -22,19 +22,65 @@ var ResultList = (function () {
     };
     ResultList.prototype.getResults = function () {
         var _this = this;
-        this.backend.getResults().then(function (results) { return _this.results = results; });
+        if (this._startDate != '' && this._endDate != '') {
+            console.log('Requesting results ' + this._startDate + ' - ' + this._endDate);
+            this.backend.getResults(this._startDate, this._endDate).then(function (results) { return _this.results = results; });
+        }
     };
     ResultList.prototype.selectResult = function (result) {
         this.selectedResult = result;
         console.log(result);
         this.onSelected.emit(result.id);
     };
+    Object.defineProperty(ResultList.prototype, "currentDate", {
+        get: function () { return this._currentDate; },
+        set: function (date) { this._currentDate = date; },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(ResultList.prototype, "startDate", {
+        get: function () { return this._startDate; },
+        set: function (date) {
+            if (date != this._startDate) {
+                this._startDate = date;
+                this.getResults();
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(ResultList.prototype, "endDate", {
+        get: function () { return this._endDate; },
+        set: function (date) {
+            if (date != this._endDate) {
+                this._endDate = date;
+                this.getResults();
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
     return ResultList;
 }());
 __decorate([
     core_1.Output(),
     __metadata("design:type", Object)
 ], ResultList.prototype, "onSelected", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", String),
+    __metadata("design:paramtypes", [String])
+], ResultList.prototype, "currentDate", null);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", String),
+    __metadata("design:paramtypes", [String])
+], ResultList.prototype, "startDate", null);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", String),
+    __metadata("design:paramtypes", [String])
+], ResultList.prototype, "endDate", null);
 ResultList = __decorate([
     core_1.Component({
         selector: 'resultList',

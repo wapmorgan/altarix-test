@@ -1,4 +1,4 @@
-import { OnInit, Component, EventEmitter, Output } from '@angular/core';
+import { OnInit, Component, EventEmitter, Input, Output } from '@angular/core';
 import { Result } from './result';
 import { BackendService } from './backend.service';
 
@@ -11,6 +11,10 @@ export class ResultList implements OnInit {
     @Output() onSelected = new EventEmitter<number>();
     selectedResult: Result;
 
+    private _currentDate: string;
+    private _startDate: string;
+    private _endDate: string;
+
     constructor(private backend: BackendService) {}
 
     ngOnInit(): void {
@@ -18,7 +22,10 @@ export class ResultList implements OnInit {
     }
 
     getResults(): void {
-        this.backend.getResults().then(results => this.results = results);
+      if (this._startDate != '' && this._endDate != '') {
+        console.log('Requesting results ' + this._startDate + ' - ' + this._endDate);
+        this.backend.getResults(this._startDate, this._endDate).then(results => this.results = results);
+      }
     }
 
     selectResult(result: Result): void {
@@ -26,4 +33,26 @@ export class ResultList implements OnInit {
       console.log(result);
       this.onSelected.emit(result.id)
     }
+
+    @Input()
+    set currentDate(date: string) { this._currentDate = date; }
+    get currentDate(): string { return this._currentDate; }
+
+    @Input()
+    set startDate(date: string) {
+      if (date != this._startDate) {
+        this._startDate = date;
+        this.getResults();
+      }
+    }
+    get startDate(): string { return this._startDate; }
+
+    @Input()
+    set endDate(date: string) {
+      if (date != this._endDate) {
+        this._endDate = date;
+        this.getResults();
+      }
+    }
+    get endDate(): string { return this._endDate; }
 }

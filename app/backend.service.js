@@ -19,8 +19,8 @@ var BackendService = (function () {
         this.lastResultUrl = 'api/last_result.json';
         this.resultUrl = 'api/result-';
     }
-    BackendService.prototype.getResults = function () {
-        return this.http.get(this.resultsUrl)
+    BackendService.prototype.getResults = function (startDate, endDate) {
+        return this.http.get(this.resultsUrl + '#start=' + startDate + ';end=' + endDate)
             .toPromise()
             .then(function (response) { return response.json(); })
             .catch(this.handleError);

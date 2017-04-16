@@ -1,13 +1,22 @@
 <div class="mdl-grid">
     <div class="mdl-cell mdl-cell--2-col"></div>
     <div class="mdl-cell mdl-cell--4-col">
-        <div *ngIf="lastResult" id="last_result_status">
-            Last check: <span style="color: green" *ngIf="lastResult.status == 'ok'">Ok</span> <span style="color: red" *ngIf="lastResult.status != 'ok'">Error</span>
-            <div class="mdl-tooltip" for="last_result_status">{{lastResult.date_request | date:'medium'}}</div>
+        <div class="mdl-grid">
+            <div class="mdl-cell mdl-cell--4-col" style="text-align: left">
+                <input type="date" [ngModel]="startDate" [attr.value]="startDate" (ngModelChange)="startDateChange($event)" [attr.max]="currentDate"/>
+            </div>
+            <div class="mdl-cell mdl-cell--4-col" style="text-align: center">
+                <div *ngIf="lastResult" id="last_result_status">
+                    Last check: <span style="color: green" *ngIf="lastResult.status == 'ok'">Ok</span> <span style="color: red" *ngIf="lastResult.status != 'ok'">Error</span>
+                    <div class="mdl-tooltip" for="last_result_status">{{lastResult.date_request | date:'medium'}}</div>
+                </div>
+            </div>
+            <div class="mdl-cell mdl-cell--4-col" style="text-align: right">
+                <input type="date" [ngModel]="endDate" [attr.value]="endDate" (ngModelChange)="endDateChange($event)" [attr.min]="currentDate"/>
+            </div>
         </div>
-        <input type="date" [value]="startDate"/>
-        <input type="date" [value]="endDate"/>
-        <resultList (onSelected)="onSelected($event)"></resultList>
+
+        <resultList (onSelected)="onSelected($event)" [currentDate]="currentDate" [startDate]="startDate" [endDate]="endDate"></resultList>
     </div>
     <div class="mdl-cell mdl-cell--4-col">
         <div *ngIf="selectedResult" class="mdl-shadow--2dp">
