@@ -1,6 +1,7 @@
 <?php
 namespace wapmorgan\altarix;
 
+use Exception;
 use PDO;
 
 class Database extends PDO {
@@ -26,20 +27,22 @@ class Database extends PDO {
         $q->bindValue(':request_time', date('c', $checkResult->request_time));
         $q->bindValue(':response_time', date('c', $checkResult->response_time));
         $q->bindParam(':delay_time', $checkResult->delay_time);
-        $q->bindParam(':status', $checkResult->status == 'ok' ? true : false);
+        $q->bindValue(':status', $checkResult->status == 'ok' ? '1' : '0');
         $q->bindParam(':response_raw', $checkResult->response_raw);
         $q->bindParam(':headers_raw', $checkResult->headers_raw);
 
-        return $q->execute();
+
+        if (!$q->execute()) {
+            throw new Exception(implode(', ', $q->errorInfo()), $q->errorCode());
+        }
+        return true;
     }
 
     public function getAllChecksInRange($startTimestamp, $endTimestamp) {
-        $q = $this->prepare('SELECT `id`, `request_time`, `response_time`, `delay_time`, `status`, `response_raw`, `headers_raw` FROM '.self::$checkResultsTable.' WHERE `request_time` BETWEEN :startTimestamp and :endTimestamp');
-        var_dump(date('c', $startTimestamp), date('c', $endTimestamp));
+        $q = $this->prepare('SELECT id, request_time, response_time, delay_time, status, response_raw, headers_raw FROM '.self::$checkResultsTable.' WHERE request_time BETWEEN :startTimestamp AND :endTimestamp');
         $q->bindValue(':startTimestamp', date('c', $startTimestamp));
         $q->bindValue(':endTimestamp', date('c', $endTimestamp));
         $q->execute();
-        var_dump($q->fetchAll());
         $checks = array();
         while (($data = $q->fetch(PDO::FETCH_ASSOC)) !== false) {
             $check = new Check();
@@ -57,8 +60,9 @@ class Database extends PDO {
     }
 
     public function getCheck($id) {
-        $q = $this->prepare('SELECT `id`, `request_time`, `response_time`, `delay_time`, `status`, `response_raw`, `headers_raw` FROM '.self::$checkResultsTable.' WHERE `id` = :id');
+        $q = $this->prepare('SELECT id, request_time, response_time, delay_time, status, response_raw, headers_raw FROM '.self::$checkResultsTable.' WHERE id = :id');
         $q->bindParam(':id', $id);
+        $q->execute();
         $data = $q->fetch(PDO::FETCH_ASSOC);
         $check = new Check();
         $check->id = $data['id'];

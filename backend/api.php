@@ -29,7 +29,7 @@ switch ($_GET['mode']) {
         $database = Database::open();
         $checks = $database->getAllChecksInRange($start_date, $end_date);
 
-        // $http->outputJson($checks);
+        $http->outputJson($checks);
         break;
 
     case 'result':

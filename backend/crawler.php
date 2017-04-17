@@ -7,4 +7,8 @@ $crawler = new Crawler();
 $database = Database::open();
 
 $check = $crawler->performCheck();
-$database->insertCheckResult($check);
+try {
+    $database->insertCheckResult($check);
+} catch (Exception $e) {
+    fwrite(STDERR, 'An error occured during storing to DB: ['.$e->getCode().'] '.$e->getMessage());
+}
