@@ -1,4 +1,4 @@
-<table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp" style="width: 100%">
+<table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp" style="width: 100%; overflow-y: scroll; height: 100%">
     <thead>
         <tr>
             <td class="mdl-data-table__cell--non-numeric">Date</td>
@@ -7,16 +7,21 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let result of results" (click)="selectResult(result)" [class.selected]="result === selectedResult">
-            <td class="mdl-data-table__cell--non-numeric">{{result.date_request * 1000 | date:'medium'}}</td>
+        <tr *ngFor="let result of results" (click)="selectResult(result)" [class.is-selected]="result == selectedResult">
+            <td class="mdl-data-table__cell--non-numeric">{{result.request_time * 1000 | date:'medium'}}</td>
             <td>{{result.delay_time}} sec</td>
             <td class="mdl-data-table__cell--non-numeric"><img *ngIf="result.status == 'ok'" src="img/ok.png"/><img *ngIf="result.status != 'ok'" src="img/error.png"/></td>
         </tr>
-        <tr *ngIf="results.length == 0">
-            <td rowspan="3" style="text-align: center">
+        <tr *ngIf="loading">
+            <td colspan="3" style="text-align: center">
                 <!-- MDL Progress Bar with Indeterminate Progress -->
                 <div id="p1" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
                 Loading ...
+            </td>
+        </tr>
+        <tr *ngIf="results.length == 0">
+            <td colspan="3" style="text-align: center">
+                <strong>No available data for selected dates.</strong>
             </td>
         </tr>
     </tbody>

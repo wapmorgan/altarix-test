@@ -6,14 +6,14 @@ import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class BackendService {
-    private resultsUrl = 'api/results.json';
-    private lastResultUrl = 'api/last_result.json';
-    private resultUrl = 'api/result-';
+    private resultsUrl = 'backend/api.php?mode=list&';
+    private lastResultUrl = 'backend/api.php?mode=last_result';
+    private resultUrl = 'backend/api.php?mode=result&id=';
 
     constructor(private http: Http) { }
 
     getResults(startDate: string, endDate: string): Promise<Result[]> {
-        return this.http.get(this.resultsUrl + '#start=' + startDate + ';end=' + endDate)
+        return this.http.get(this.resultsUrl + 'start_date=' + startDate + '&end_date=' + endDate)
            .toPromise()
            .then(response => response.json() as Result[])
            .catch(this.handleError);

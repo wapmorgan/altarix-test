@@ -15,12 +15,12 @@ require("rxjs/add/operator/toPromise");
 var BackendService = (function () {
     function BackendService(http) {
         this.http = http;
-        this.resultsUrl = 'api/results.json';
-        this.lastResultUrl = 'api/last_result.json';
-        this.resultUrl = 'api/result-';
+        this.resultsUrl = 'backend/api.php?mode=list&';
+        this.lastResultUrl = 'backend/api.php?mode=last_result';
+        this.resultUrl = 'backend/api.php?mode=result&id=';
     }
     BackendService.prototype.getResults = function (startDate, endDate) {
-        return this.http.get(this.resultsUrl + '#start=' + startDate + ';end=' + endDate)
+        return this.http.get(this.resultsUrl + 'start_date=' + startDate + '&end_date=' + endDate)
             .toPromise()
             .then(function (response) { return response.json(); })
             .catch(this.handleError);

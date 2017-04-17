@@ -14,6 +14,7 @@ var backend_service_1 = require("./backend.service");
 var ResultList = (function () {
     function ResultList(backend) {
         this.backend = backend;
+        this.loading = true;
         this.results = [];
         this.onSelected = new core_1.EventEmitter();
     }
@@ -22,10 +23,12 @@ var ResultList = (function () {
     };
     ResultList.prototype.getResults = function () {
         var _this = this;
+        this.loading = true;
         if (this._startDate != '' && this._endDate != '') {
             console.log('Requesting results ' + this._startDate + ' - ' + this._endDate);
             this.backend.getResults(this._startDate, this._endDate).then(function (results) { return _this.results = results; });
         }
+        this.loading = false;
     };
     ResultList.prototype.selectResult = function (result) {
         this.selectedResult = result;

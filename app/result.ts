@@ -1,7 +1,7 @@
 export class Result {
     id: number;
-    request_date: number;
-    response_date: number;
+    request_time: number;
+    response_time: number;
     delay_time: number;
     status: string;
     response_raw: string;

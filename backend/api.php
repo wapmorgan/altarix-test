@@ -43,4 +43,13 @@ switch ($_GET['mode']) {
         else
             $http->outputJson($result);
         break;
+
+    case 'last_result':
+        $database = Database::open();
+        $result = $database->getLastCheck();
+        if ($result === false)
+            $http->error(404, 'Checks does not exist');
+        else
+            $http->outputJson($result);
+        break;
 }

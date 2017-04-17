@@ -7,6 +7,7 @@ import { BackendService } from './backend.service';
   templateUrl: './resultList.component.html'
 })
 export class ResultList implements OnInit {
+    loading: boolean = true;
     results: Result[] = [];
     @Output() onSelected = new EventEmitter<number>();
     selectedResult: Result;
@@ -22,10 +23,12 @@ export class ResultList implements OnInit {
     }
 
     getResults(): void {
+      this.loading = true;
       if (this._startDate != '' && this._endDate != '') {
         console.log('Requesting results ' + this._startDate + ' - ' + this._endDate);
         this.backend.getResults(this._startDate, this._endDate).then(results => this.results = results);
       }
+      this.loading = false;
     }
 
     selectResult(result: Result): void {
