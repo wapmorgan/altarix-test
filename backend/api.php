@@ -9,9 +9,9 @@ if (!isset($_GET['mode']))
     $http->error(400, 'No mode argument');
 
 function dateStringToTimestamp($date) {
-    if (!preg_match('~^([0-9]{4})\-([0-9]{2}\-([0-9]{2})$~', $date, $match))
+    if (!preg_match('~^([0-9]{4})\-([0-9]{2})\-([0-9]{2})$~', $date, $match))
         return false;
-    return mktime(0, 0, 0, $match[1], $match[2], $match[0]);
+    return mktime(0, 0, 0, (int)$match[2], (int)$match[3], (int)$match[1]);
 }
 
 switch ($_GET['mode']) {
@@ -29,7 +29,7 @@ switch ($_GET['mode']) {
         $database = Database::open();
         $checks = $database->getAllChecksInRange($start_date, $end_date);
 
-        $http->outputJson($checks);
+        // $http->outputJson($checks);
         break;
 
     case 'result':

@@ -2,6 +2,7 @@
 namespace wapmorgan\altarix;
 
 class Check {
+    public $id;
     public $request_time;
     public $response_time;
     public $delay_time;

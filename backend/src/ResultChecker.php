@@ -31,7 +31,10 @@ class ResultChecker {
 
     public function checkResult() {
         try {
-            $this->checkStructure(simplexml_load_string($this->result), self::$ethalonStructure);
+            $xml = simplexml_load_string($this->result);
+            if ($xml === false)
+                return false;
+            $this->checkStructure($xml, self::$ethalonStructure);
             return true;
         } catch (Exception $e) {
             return false;
