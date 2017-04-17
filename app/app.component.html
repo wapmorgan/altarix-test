@@ -3,7 +3,7 @@
     <div class="mdl-cell mdl-cell--5-col" style="overflow-y: scroll; height: 90vh">
         <div class="mdl-grid">
             <div class="mdl-cell mdl-cell--4-col" style="text-align: left">
-                <input type="date" [ngModel]="startDate" [attr.value]="startDate" (ngModelChange)="startDateChange($event)" [attr.max]="currentDate"/>
+                <input type="date" [ngModel]="startDate" [attr.value]="startDate" (ngModelChange)="startDateChange($event)" [attr.max]="endDate"/>
                 <!-- <my-date-picker
                     (dateChanged)="onStartDateChanged($event)"
                     [selDate]="startDate"></my-date-picker> -->
@@ -15,7 +15,7 @@
                 </div>
             </div>
             <div class="mdl-cell mdl-cell--4-col" style="text-align: right">
-                <input type="date" [ngModel]="endDate" [attr.value]="endDate" (ngModelChange)="endDateChange($event)" [attr.min]="currentDate"/>
+                <input type="date" [ngModel]="endDate" [attr.value]="endDate" (ngModelChange)="endDateChange($event)" [attr.min]="startDate"/>
                 <!-- <my-date-picker
                     (dateChanged)="onEndDateChanged($event)"
                     [selDate]="endDate"></my-date-picker> -->
