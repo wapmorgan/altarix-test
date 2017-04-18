@@ -21,7 +21,6 @@ var AppComponent = (function () {
         this.currentDate = date.getFullYear() + '-' + (date.getMonth() < 9 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-' + (date.getDate() < 10 ? '0' + date.getDate() : date.getDate());
         this.startDate = this.currentDate;
         this.endDate = this.startDate;
-        console.log(this.startDate);
     };
     AppComponent.prototype.getLastResult = function () {
         var _this = this;
@@ -30,7 +29,6 @@ var AppComponent = (function () {
     AppComponent.prototype.onSelected = function (id) {
         var _this = this;
         this.backend.getResult(id).then(function (selectedResult) { return _this.selectedResult = selectedResult; });
-        console.log(id);
     };
     AppComponent.prototype.startDateChange = function (date) {
         this.startDate = date;

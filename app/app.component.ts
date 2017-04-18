@@ -22,7 +22,6 @@ export class AppComponent {
         this.currentDate = date.getFullYear() + '-' + (date.getMonth() < 9 ? '0' + (date.getMonth()+1) : date.getMonth()+1) + '-' + (date.getDate() < 10 ? '0' + date.getDate() : date.getDate());
         this.startDate = this.currentDate;
         this.endDate = this.startDate;
-        console.log(this.startDate);
     }
 
     getLastResult(): void {
@@ -31,9 +30,7 @@ export class AppComponent {
 
     onSelected(id: number): void {
         this.backend.getResult(id).then(selectedResult => this.selectedResult = selectedResult);
-        console.log(id);
     }
-
 
     startDateChange(date: string): void {
         this.startDate = date;

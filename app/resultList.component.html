@@ -1,15 +1,15 @@
 <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp" style="width: 100%; overflow-y: scroll; height: 100%">
     <thead>
         <tr>
-            <td class="mdl-data-table__cell--non-numeric">Date</td>
-            <td>Ping</td>
-            <td class="mdl-data-table__cell--non-numeric">Status</td>
+            <td class="mdl-data-table__cell--non-numeric">Дата</td>
+            <td>Время</td>
+            <td class="mdl-data-table__cell--non-numeric">Результат</td>
         </tr>
     </thead>
     <tbody>
         <tr *ngFor="let result of results" (click)="selectResult(result)" [class.is-selected]="result == selectedResult">
             <td class="mdl-data-table__cell--non-numeric">{{result.request_time * 1000 | date:'medium'}}</td>
-            <td>{{result.delay_time}} sec</td>
+            <td>{{result.delay_time}} сек.</td>
             <td class="mdl-data-table__cell--non-numeric"><img *ngIf="result.status == 'ok'" src="img/ok.png"/><img *ngIf="result.status != 'ok'" src="img/error.png"/></td>
         </tr>
         <tr *ngIf="loading">

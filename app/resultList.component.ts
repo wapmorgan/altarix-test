@@ -33,7 +33,6 @@ export class ResultList implements OnInit {
 
     selectResult(result: Result): void {
       this.selectedResult = result;
-      console.log(result);
       this.onSelected.emit(result.id)
     }
 

@@ -32,7 +32,6 @@ var ResultList = (function () {
     };
     ResultList.prototype.selectResult = function (result) {
         this.selectedResult = result;
-        console.log(result);
         this.onSelected.emit(result.id);
     };
     Object.defineProperty(ResultList.prototype, "currentDate", {
