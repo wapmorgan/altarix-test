@@ -28,39 +28,41 @@
     </div>
     <div class="mdl-cell mdl-cell--5-col" style="overflow-y: scroll; height: 90vh">
         <div *ngIf="selectedResult" class="mdl-shadow--2dp">
-            <fieldset>
-                <legend>{{selectedResult.request_time * 1000 | date:'medium'}}</legend>
-                <table class="mdl-data-table mdl-js-data-table" style="width: 100%; table-layout: fixed">
-                    <tbody>
-                        <tr>
-                            <td class="mdl-data-table__cell--non-numeric">Дата запроса:</td>
-                            <td>{{selectedResult.request_time * 1000 | date:'medium'}}</td>
-                        </tr>
-                        <tr>
-                            <td class="mdl-data-table__cell--non-numeric">Дата ответа:</td>
-                            <td>{{selectedResult.response_time * 1000 | date:'medium'}}</td>
-                        </tr>
-                        <tr>
-                            <td class="mdl-data-table__cell--non-numeric">Время ожидания:</td>
-                            <td>{{selectedResult.delay_time | number:'1.0-1'}}с ({{selectedResult.delay_time * 1000 | number:'3.0-0'}}мс)</td>
-                        </tr>
-                        <tr>
-                            <td class="mdl-data-table__cell--non-numeric">Результат проверки:</td>
-                            <td [style.color]="selectedResult.status == 'ok' ? 'green' : 'red'">{{selectedResult.status | uppercase}}</td>
-                        </tr>
-                        <tr *ngIf="selectedResult.response_raw">
-                            <td class="mdl-data-table__cell--non-numeric" colspan="2">Ответ сервера:<br />
-                                <div style="word-break: break-word; overflow-wrap: break-word; white-space: pre-wrap; font-family: monospace;">{{selectedResult.response_raw}}</div>
-                            </td>
-                        </tr>
-                        <tr *ngIf="selectedResult.headers_raw">
-                            <td class="mdl-data-table__cell--non-numeric" colspan="2">Заголовки ответа:
-                                <div style="word-break: break-word; overflow-wrap: break-word; white-space: pre-wrap; font-family: monospace;">{{selectedResult.headers_raw}}</div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </fieldset>
+            <table class="mdl-data-table mdl-js-data-table" style="width: 100%; table-layout: fixed">
+                <thead>
+                    <tr>
+                        <td class="mdl-data-table__cell--non-numeric" colspan="2">{{selectedResult.request_time * 1000 | date:'fullDate'}}</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="mdl-data-table__cell--non-numeric">Дата запроса:</td>
+                        <td>{{selectedResult.request_time * 1000 | date:'short'}}</td>
+                    </tr>
+                    <tr>
+                        <td class="mdl-data-table__cell--non-numeric">Дата ответа:</td>
+                        <td>{{selectedResult.response_time * 1000 | date:'short'}}</td>
+                    </tr>
+                    <tr>
+                        <td class="mdl-data-table__cell--non-numeric">Время ожидания:</td>
+                        <td>{{selectedResult.delay_time | number:'1.0-1'}}с ({{selectedResult.delay_time * 1000 | number:'3.0-0'}}мс)</td>
+                    </tr>
+                    <tr>
+                        <td class="mdl-data-table__cell--non-numeric">Результат проверки:</td>
+                        <td [style.color]="selectedResult.status == 'ok' ? 'green' : 'red'">{{selectedResult.status | uppercase}}</td>
+                    </tr>
+                    <tr *ngIf="selectedResult.response_raw">
+                        <td class="mdl-data-table__cell--non-numeric" colspan="2">Ответ сервера:<br />
+                            <div style="word-break: break-word; overflow-wrap: break-word; white-space: pre-wrap; font-family: monospace;">{{selectedResult.response_raw}}</div>
+                        </td>
+                    </tr>
+                    <tr *ngIf="selectedResult.headers_raw">
+                        <td class="mdl-data-table__cell--non-numeric" colspan="2">Заголовки ответа:
+                            <div style="word-break: break-word; overflow-wrap: break-word; white-space: pre-wrap; font-family: monospace;">{{selectedResult.headers_raw}}</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
     <div class="mdl-cell mdl-cell--1-col"></div>
