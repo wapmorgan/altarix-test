@@ -46,7 +46,9 @@ var ResultList = (function () {
         set: function (date) {
             if (date != this._startDate) {
                 this._startDate = date;
-                this.getResults();
+                console.log(this._endDate);
+                if (this._endDate != undefined)
+                    this.getResults();
             }
         },
         enumerable: true,
@@ -57,7 +59,8 @@ var ResultList = (function () {
         set: function (date) {
             if (date != this._endDate) {
                 this._endDate = date;
-                this.getResults();
+                if (this._startDate != undefined)
+                    this.getResults();
             }
         },
         enumerable: true,

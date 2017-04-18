@@ -9,8 +9,10 @@
                     [selDate]="startDate"></my-date-picker> -->
             </div>
             <div class="mdl-cell mdl-cell--4-col" style="text-align: center">
-                <div *ngIf="lastResult" id="last_result_status">
-                    Last check: <span style="color: green" *ngIf="lastResult.status == 'ok'">Ok</span> <span style="color: red" *ngIf="lastResult.status != 'ok'">Error</span>
+                <div *ngIf="lastResult">
+                    <div id="last_result_status">
+                        Last check: <span style="color: green" *ngIf="lastResult.status == 'ok'">OK</span> <span style="color: red" *ngIf="lastResult.status != 'ok'">ERROR </span>
+                    </div>
                     <div class="mdl-tooltip" for="last_result_status">{{lastResult.request_time | date:'medium'}}</div>
                 </div>
             </div>
@@ -44,7 +46,7 @@
                         </tr>
                         <tr>
                             <td class="mdl-data-table__cell--non-numeric">Результат проверки:</td>
-                            <td>{{selectedResult.status | uppercase}}</td>
+                            <td [style.color]="selectedResult.status == 'ok' ? 'green' : 'red'">{{selectedResult.status | uppercase}}</td>
                         </tr>
                         <tr *ngIf="selectedResult.response_raw">
                             <td class="mdl-data-table__cell--non-numeric" colspan="2">Ответ сервера:<br />

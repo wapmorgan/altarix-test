@@ -45,7 +45,9 @@ export class ResultList implements OnInit {
     set startDate(date: string) {
       if (date != this._startDate) {
         this._startDate = date;
-        this.getResults();
+        console.log(this._endDate);
+        if (this._endDate != undefined)
+          this.getResults();
       }
     }
     get startDate(): string { return this._startDate; }
@@ -54,7 +56,8 @@ export class ResultList implements OnInit {
     set endDate(date: string) {
       if (date != this._endDate) {
         this._endDate = date;
-        this.getResults();
+        if (this._startDate != undefined)
+          this.getResults();
       }
     }
     get endDate(): string { return this._endDate; }
