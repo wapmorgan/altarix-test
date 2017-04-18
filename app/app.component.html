@@ -10,7 +10,7 @@
             </div>
             <div class="mdl-cell mdl-cell--4-col" style="text-align: center">
                 <div *ngIf="lastResult">
-                    <div id="last_result_status">
+                    <div id="last_result_status" (click)="onSelected(lastResult.id)">
                         Последняя проверка: <span style="color: green" *ngIf="lastResult.status == 'ok'">OK</span> <span style="color: red" *ngIf="lastResult.status != 'ok'">ERROR </span>
                     </div>
                     <div class="mdl-tooltip" for="last_result_status">{{lastResult.request_time | date:'medium'}}</div>
