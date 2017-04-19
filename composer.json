@@ -3,5 +3,9 @@
         "psr-4": {
             "wapmorgan\\altarix\\": "backend/src/"
         }
+    },
+    "require": {
+        "ext-curl": "*",
+        "ext-pgsql": "*"
     }
 }
