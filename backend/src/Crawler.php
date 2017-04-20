@@ -8,7 +8,6 @@ class Crawler {
     static public function performCheck() {
         $request = new Request();
         $request->performRequest();
-        var_dump($request->getResponseHeaders());
         $result_checker = new ResultChecker($request->getResponseBody());
 
         $check = new Check();
