@@ -16,7 +16,7 @@ class Crawler {
         $check->response_time = $request->getResponseTime();
         $check->delay_time = $request->getResponseTime() - $request->getRequestTime();
         $check->response_raw = $request->getResponseBody();
-        $check->headers_raw = implode("\n", $request->getResponseHeaders());
+        $check->headers_raw = $request->getResponseHeaders();
         $check->status = $result_checker->checkResult() ? 'ok' : 'error';
 
         if (strlen($check->response_raw) > self::$bodyMaxSize)

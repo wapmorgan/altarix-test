@@ -1,9 +1,12 @@
 <?php
 namespace wapmorgan\altarix;
 
+use SoapClient;
+
 class Request {
-    public $url = 'http://82.138.16.126:8888/TaxiPublic/Service.svc?wsdl';
-    public $request_data = '<taxi:RegNum>ем33377</taxi:RegNum>';
+    public $wsdl_url = 'http://speller.yandex.net/services/spellservice?WSDL';
+    public $request_method = 'checkText';
+    public $request_data = array('text' => 'На лисной опушки распускаюца колоколчики, незабутки, шыповник');
 
     protected $request_time;
     protected $response_time;
@@ -11,13 +14,12 @@ class Request {
     protected $response_body;
 
     public function performRequest() {
-        $c = curl_init($this->url);
-        curl_setopt($c, CURLOPT_HEADERFUNCTION, array($this, 'headersWriter'));
-        curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
+        $soap = new SoapClient($this->wsdl_url, array('trace' => true));
         $this->request_time = microtime(true);
-        $this->response_body = curl_exec($c);
+        $result = call_user_func(array($soap, $this->request_method), $this->request_data);
         $this->response_time = microtime(true);
-        curl_close($c);
+        $this->response_body = $soap->__getLastResponse();
+        $this->response_headers = $soap->__getLastResponseHeaders();
     }
 
     public function headersWriter($ch, $header) {

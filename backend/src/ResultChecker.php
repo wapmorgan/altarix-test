@@ -5,24 +5,13 @@ use Exception;
 use SimpleXMLElement;
 
 class ResultChecker {
-    static public $ethalonStructure = array('Body' => array(
-        'GetTaxiInfosResponse' => array(
-            'GetTaxiInfosResult' => array(
-                'TaxiInfo' => array(
-                    'LicenseNum' => '02651',
-                    'LicenseDate' => '08.08.2011 0:00:00',
-                    'Name' => 'ООО "НЖТ-ВОСТОК"',
-                    'OgrnNum' => '1107746402246',
-                    'OgrnDate' => '17.05.2010 0:00:00',
-                    'Brand' => 'FORD',
-                    'Model' => 'FOCUS',
-                    'RegNum' => 'ЕМ33377',
-                    'Year' => '2011',
-                    'BlankNum' => '002695',
-                ),
-            ),
-        ),
-    ));
+    static public $ethalonReplacements = array(
+        'лисной' => 'лесной',
+        'распускаюца' => 'распускаются',
+        'колоколчики' => 'колокольчики',
+        'незабутки' => 'незабудки',
+        'шыповник' => 'шиповник',
+    );
     protected $result;
 
     public function __construct($result) {
@@ -31,31 +20,35 @@ class ResultChecker {
 
     public function checkResult() {
         try {
-            $xml = simplexml_load_string($this->result);
-            if ($xml === false)
-                return false;
-            $this->checkStructure($xml, self::$ethalonStructure);
+            $ethalon = self::$ethalonReplacements;
+            $xml = new SimpleXMLElement($this->result, null, false, 'soap');
+            $xml->registerXPathNamespace('s', 'http://schemas.xmlsoap.org/soap/envelope/');
+            $body = $xml->xpath('//s:Envelope/s:Body');
+            foreach ($body[0]->CheckTextResponse->SpellResult->error as $error) {
+                if ($error['code'] != 1)
+                    throw new Exception('Error code is not 1');
+                if (!isset($error->word) || !isset($error->s))
+                    throw new Exception('Unexisting "s" or "word"');
+                $word = (string)$error->word;
+                if (!isset($ethalon[$word]))
+                    throw new Exception('Unknown word "'.$word.'"');
+                $s = (string)$error->s;
+                if ($ethalon[$word] != $s)
+                    throw new Exception('Unknown replacement "'.$s.'"');
+                unset($ethalon[$word]);
+            }
+            if (!empty($ethalon))
+                throw new Exception('Results contains too few replacements, '.count($ethalon).' left');
             return true;
         } catch (Exception $e) {
+            var_dump($e);
             return false;
         }
     }
 
-    protected function checkStructure(SimpleXMLElement $xml, array $structure) {
-        foreach ($structure as $element => $content) {
-            if (is_array($content)) {
-                // check for inner element
-                if (!isset($xml[$element]))
-                    throw new Exception('XML does not have inner element "'.$element.'"');
-                $this->checkStructure($xml[$element], $content);
-            }
-            // check for element value
-            else {
-                if (!isset($xml[$element]))
-                    throw new Exception('XML does not have inner element "'.$element.'"');
-                if ((string)$xml[$element] != $content)
-                    throw new Exception('XML element "'.$element.'" value '.(string)$xml[$element].') mismatch with ethalon ('.$content.')');
-            }
-        }
+    protected function xml2array($xmlObject, $out = array()) {
+        foreach ((array)$xmlObject as $index => $node)
+            $out[$index] = (is_object($node) || is_array($node)) ? xml2array ($node) : $node;
+        return $out;
     }
 }
